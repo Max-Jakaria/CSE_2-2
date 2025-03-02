@@ -21,24 +21,24 @@ int findNext(int cur, int n){
 void tsp(int start){
     int n = g.size(), cost=0, cur = start;
     
-    vector<int> price(n+1);
+    vector<int> travel(n+1);
     
     vis[start] = true;
-    price[0] = start;
+    travel[0] = start;
     
     for(int i=1; i<n; i++){
         int next = findNext(cur, n);
-        price[i] = next;
+        travel[i] = next;
         cost += g[cur][next];
         vis[next] = true;
         cur = next;
     }
     
     cost += g[cur][start];
-    price[n] = start;
+    travel[n] = start;
     
     for(int i = 0; i <= n; i++){
-        cout <<price[i] <<(i<n ? "-> ": "\n");
+        cout <<travel[i] <<(i<n ? "-> ": "\n");
     }
 
     cout <<cost;
@@ -51,7 +51,7 @@ int main(){
         {15,35,0,30},
         {20,25,30,0}
     };
+    tsp(0);
     
-    tsp(0); 
     return 0;
 }
