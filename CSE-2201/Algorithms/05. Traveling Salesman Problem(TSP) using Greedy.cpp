@@ -1,45 +1,57 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int findNext(vector<vector<int>> &g, vector<bool> &visited, int curr, int n){
+const int N = 1e5+10;
+vector<vector<int>> g;
+vector<bool> vis(N, false);
+
+int findNext(int cur, int n){
     int minD = INT_MAX, next = -1;
-    for(int j = 0; j < n; j++)
-        if(!visited[j] && g[curr][j] && g[curr][j] < minD)
-            minD = g[curr][j], next = j;
+
+    for(int j=0; j<n; j++){
+        if(!vis[j] && g[cur][j] && g[cur][j] < minD){
+            minD = g[cur][j];
+            next = j;
+        }
+    }
+
     return next;
 }
 
-void tsp(vector<vector<int>> &g, int start){
-    int n = g.size(), cost = 0, curr = start;
-    vector<bool> visited(n, false);
+void tsp(int start){
+    int n = g.size(), cost=0, cur = start;
+    
     vector<int> price(n+1);
     
-    visited[start] = true;
+    vis[start] = true;
     price[0] = start;
     
-    for(int i = 1; i < n; i++){
-        int next = findNext(g, visited, curr, n);
+    for(int i=1; i<n; i++){
+        int next = findNext(cur, n);
         price[i] = next;
-        cost += g[curr][next];
-        visited[next] = true;
-        curr = next;
+        cost += g[cur][next];
+        vis[next] = true;
+        cur = next;
     }
     
-    cost += g[curr][start];
+    cost += g[cur][start];
     price[n] = start;
     
-    for(int i = 0; i <= n; i++)
-        cout << price[i] << (i < n ? " -> " : "\n");
-    cout << cost;
+    for(int i = 0; i <= n; i++){
+        cout <<price[i] <<(i<n ? "-> ": "\n");
+    }
+
+    cout <<cost;
 }
 
 int main(){
-    vector<vector<int>> g = {
+    g = {
         {0,10,15,20},
         {10,0,35,25},
         {15,35,0,30},
         {20,25,30,0}
     };
-    tsp(g, 0);
+    
+    tsp(0); 
     return 0;
 }
