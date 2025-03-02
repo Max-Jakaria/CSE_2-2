@@ -17,8 +17,7 @@ int binSearch(vector<int> &arr, int low, int high, int &val){
     
 //     while(low <= high){
 //         int mid = low + (high-low) / 2;
-        
-//         cout<<low<<' '<<high<<" : "<<mid<<'\n';
+
 //         if(arr[mid] == val) return mid;
 //         if(arr[mid] > val) high = mid-1;
 //         else low = mid+1;
