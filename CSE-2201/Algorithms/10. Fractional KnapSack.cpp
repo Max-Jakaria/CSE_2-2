@@ -10,7 +10,7 @@ double fractionalKnapSack(int W) {
 
     double maxProfit = 0.0;
 
-    for (const auto &item : items) {
+    for (auto &item : items) {
         if (W == 0) break;
         
         int weight = item.second.first;
