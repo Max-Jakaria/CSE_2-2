@@ -9,9 +9,7 @@ vector<int> dist(N, INF);
 
 void dijkstra(int source){
     vector<bool> vis(N, 0);
-
     set<pair<int,int>> st;
-
     // Using set as a priority queue: {distance, vertex}
     st.insert({0, source});
     dist[source] = 0;
@@ -29,8 +27,7 @@ void dijkstra(int source){
         for(auto &child: g[v]){
             int child_v = child.first;
             int wt = child.second;
-
-            // Main funda
+            // Main funda...
             int new_dist = curr_dist + wt;
             if(new_dist < dist[child_v]){
                 dist[child_v] = new_dist;
