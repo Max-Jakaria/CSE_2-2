@@ -1,54 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 4;
-vector<int> cols(N, 0);
-vector<int> leftDiagonal(N * 2, 0);
-vector<int> rightDiagonal(N * 2, 0);
+const int N = 20;
+vector<int> col(N);
+vector<int> leftD(N);
+vector<int> rightD(N);
 vector<int> cur;
 
-int placeQueens(int i) {
-    int n = cols.size();
+bool isPlaced(int i, int &n){
+    if(i == n) return true;
 
-    //If all queens are placed then return true
-    if (i == n) return 1;
-
-    for (int j = 0; j < n; j++) {
-
-        // Check if the queen can be placed
-        if (cols[j] || rightDiagonal[i + j] || leftDiagonal[i - j + n - 1])
+    for(int j=0; j<n; j++){
+        if(col[j] || leftD[i-j + n-1] || rightD[i+j])
             continue;
 
-        // mark the cell occupied
-        cols[j] = 1;
-        rightDiagonal[i + j] = 1;
-        leftDiagonal[i - j + n - 1] = 1;
-        cur.push_back(j + 1);
+        cur.push_back(j+1);
+        col[j] = 1;
+        leftD[i-j + n-1] = 1;
+        rightD[i + j] = 1;
 
-        if (placeQueens(i + 1))
-            return 1;
+        if(isPlaced(i+1, n)) return true;
 
-        // remove the queen from current cell
         cur.pop_back();
-        cols[j] = 0;
-        rightDiagonal[i + j] = 0;
-        leftDiagonal[i - j + n - 1] = 0;
+        col[j] = 0;
+        leftD[i-j + n-1] = 0;
+        rightD[i + j] = 0;
     }
-    return 0;
+
+    return false;
 }
 
-
-vector<int> nQueen(int n) {
-    // If the solution exists
-    if (placeQueens(0)) return cur;
-    else return { -1};
+vector<int> nQueen(int &n){
+    if(isPlaced(0, n)){
+        return cur;
+    }
+    else return {-1};
 }
 
-int main() {
-    int n = 4;
+int main(){
+    int n=4;
     vector<int> ans = nQueen(n);
-    for (auto i : ans) {
-        cout << i << " ";
-    }
+    for(auto &it: ans)
+        cout<<it<<' ';
+
     return 0;
 }
